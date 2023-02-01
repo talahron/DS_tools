@@ -1,0 +1,29 @@
+import pandas as pd
+
+# Read the email text file
+with open("email_file.txt", "r") as file:
+    email_text = file.read()
+
+# Split the email text into lines
+lines = email_text.split("\n")
+
+# Find the start and end index of the table in the email text
+start_index = -1
+end_index = -1
+for i, line in enumerate(lines):
+    if "table header" in line:
+        start_index = i + 1
+    if "end of table" in line:
+        end_index = i
+
+# Extract the table data from the email text
+table_data = []
+for i in range(start_index, end_index):
+    row = lines[i].split("\t")
+    table_data.append(row)
+
+# Create the pandas dataframe from the table data
+df = pd.DataFrame(table_data)
+
+# Print the resulting dataframe
+print(df)
